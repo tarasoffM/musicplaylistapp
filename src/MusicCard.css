@@ -1,0 +1,48 @@
+
+.musicCard {
+  display: flex;
+  justify-content: flex-start;
+  width: 30rem;
+  padding: 1rem;
+  margin: 1rem;
+  background-color: #967147;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.musicCard img {
+  width: 7rem;
+  height: 7rem;
+  border-radius: 0.5rem;
+  margin: auto 1rem;
+}
+
+.musicInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: flex-start;
+  width: 60%;
+  color: white;
+}
+
+.musicInfo h2, .musicInfo p {
+  font-size: 1.5rem;
+  margin: 0;
+  align-self: start;
+}
+
+button {
+  background-color: #ffffff;
+  color: #967147;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  margin: auto 0;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #f0f0f0;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.884);
+}
