@@ -5,7 +5,7 @@
   width: 30rem;
   padding: 1rem;
   margin: 1rem;
-  background-color: #967147;
+  background-color: #384d7571;
   border-radius: 0.5rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -14,7 +14,7 @@
   width: 7rem;
   height: 7rem;
   border-radius: 0.5rem;
-  margin: auto 1rem;
+  margin: auto 0;
 }
 
 .musicInfo {
@@ -24,6 +24,7 @@
   align-content: flex-start;
   width: 60%;
   color: white;
+  margin-left: 1rem;
 }
 
 .musicInfo h2, .musicInfo p {

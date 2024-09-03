@@ -1,16 +1,16 @@
 import React from "react";
 import "./MusicCard.css";
 
-const MusicCard = () => {
+const MusicCard = (props) => {
 
     return (
         <div className="musicCard">
-            <img src="https://via.placeholder.com/100" alt="Album Cover" />
+            <img src={props.cover} alt="Album Cover" />
             <div className="musicInfo">
-                <h2>Album Name</h2>
-                <p>Artist Name</p>
+                <h2 id="cardTitle" className="cardTitle" >{props.songTitle}</h2>
+                <p>{props.artist}</p>
             </div>
-            <button>X</button>
+            <button onClick={() => props.displayResult().then((result) => alert(result))}>Add</button>
         </div>
     );
 };
