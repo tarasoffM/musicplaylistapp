@@ -1,0 +1,17 @@
+
+.searchContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
+}
+
+
+.searchBar {
+  margin: auto 1rem;
+  padding: 1rem;
+  max-width: 50rem;
+}
+
+
+

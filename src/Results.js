@@ -7,7 +7,7 @@ const Results = (props) => {
 
     return (
         <div className="results">
-            {props.result.map((item) => (<MusicCard  songTitle={item.name} artist={item.artist} cover={item.cover} displayResult={props.displayResult} />))}
+            {props.result.map((item) => (<MusicCard  songTitle={item.name} artist={item.artist} cover={item.cover} addSong={props.addSong} />))}
 
         </div>
     );

@@ -10,20 +10,16 @@ function App() {
 
   const [search, setSearch] = useState('');
   const [resultArray, setResultArray] = useState([]);
+  const [playlistArray, setPlaylistArray] = useState([]);
 
 
+  // state to hold the search term
   const handleSearch = (event) => {
     event.preventDefault();
     setSearch(event.target.value);
   };
 
-  /*
-  useEffect(() => {
-    document.getElementById("cardTitle").innerHTML = search;
-  }, [search]);
-  */
-
-
+  // function to search for music titles
   const searchTitles = async (event) => {
     event.preventDefault();
     const token = await getToken();
@@ -31,15 +27,23 @@ function App() {
     .then((response) => setResultArray(response));
   };
 
-  
+  // function to add a song to the playlist
+  const addSong = (event) => {
+    event.preventDefault();
+    const target = event.target.parentElement
+    const songToAdd = resultArray.filter((item) => item === target);
+    alert(target);
+    setPlaylistArray([...playlistArray, target]);
+    //alert(target);
+  }
 
-  return (
+    return (
     <div className="App">
       <Header />
       <SearchBar handleSearch={handleSearch} value={search} displayResult={searchTitles}/>
       <div className="mainContent">
-        <Results displayResult={searchTitles} result={resultArray}/>
-        <Playlist />
+        <Results result={resultArray} addSong={addSong}/>
+        <Playlist result={playlistArray}/>
       </div>
     </div>
   );

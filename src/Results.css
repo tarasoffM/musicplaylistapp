@@ -1,5 +1,6 @@
-.results {
+.results, .playList {
     background-color: rgba(52, 52, 80, 0.801);
     border: 5px solid #757c9c80;
     border-radius: 10px;
+    margin: 1rem;
 }
