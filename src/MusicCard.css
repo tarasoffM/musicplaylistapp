@@ -1,10 +1,11 @@
 
 .musicCard {
+  box-sizing:border-box;
   display: flex;
   justify-content: flex-start;
-  width: 30rem;
+  width: 90%;
   padding: 1rem;
-  margin: 1rem;
+  margin: 1rem auto;
   background-color: #384d7571;
   border-radius: 0.5rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -22,7 +23,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-content: flex-start;
-  width: 60%;
+  width: 100%;
   color: white;
   margin-left: 1rem;
 }
@@ -44,6 +45,8 @@ button {
 }
 
 button:hover {
-  background-color: #f0f0f0;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.884);
+  background-color: #8383a7;
+  color: rgb(17, 0, 255);
+  box-shadow: 2px 2px 5px rgba(177, 170, 241, 0.884);
+  border: 1px solid #7371d6;
 }

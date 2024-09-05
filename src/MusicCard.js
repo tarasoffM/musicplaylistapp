@@ -4,7 +4,7 @@ import "./MusicCard.css";
 const MusicCard = (props) => {
 
     return (
-        <div className="musicCard">
+        <div id={props.id} className="musicCard">
             <img src={props.cover} alt="Album Cover" />
             <div className="musicInfo">
                 <h2>{props.songTitle}</h2>

@@ -1,5 +1,5 @@
 header {
-    background-color: #384d7571;
+  background-color: rgba(27, 27, 48, 0.801);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -7,4 +7,5 @@ header {
     font-size: calc(10px + 2vmin);
     color: white;
     margin-bottom: 2rem;
+    box-shadow: 0 10px 10px rgba(149, 147, 247, 0.226);
   }

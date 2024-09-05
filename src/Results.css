@@ -1,6 +1,31 @@
 .results, .playList {
-    background-color: rgba(52, 52, 80, 0.801);
+    box-sizing: border-box;
+    background-color: rgba(27, 27, 48, 0.801);
     border: 5px solid #757c9c80;
     border-radius: 10px;
     margin: 1rem;
+    height: 105rem;
+    width: 30%;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #090f2c80 #757c9c80;
+}
+
+.playlistForm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem;
+}
+
+.playlistForm input {
+    width: 80%;
+    height: 2rem;
+    border-radius: 10px;
+    padding: 0.5rem;
+    margin-right: 1rem;
+    background-color: hsla(230, 66%, 10%, 0.502);
+    color: white;
+    font-size: 1.5rem;
+    text-align: center;
 }
