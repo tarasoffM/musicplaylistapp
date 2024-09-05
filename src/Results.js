@@ -7,8 +7,14 @@ const Results = (props) => {
 
     return (
         <div className="results">
-            {props.result.map((item) => (<MusicCard  songTitle={item.name} artist={item.artist} cover={item.cover} addSong={props.addSong} />))}
-
+            {props.resultArray.map((item) => (<MusicCard  
+            key={item.id}
+            id={item.id}
+            songTitle={item.name} 
+            artist={item.artist} 
+            cover={item.cover} 
+            addSong={props.addSong}
+            />))}
         </div>
     );
 };
