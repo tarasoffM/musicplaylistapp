@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Header from './Header';
 import Results from './Results';
@@ -12,6 +12,20 @@ function App() {
   const [resultArray, setResultArray] = useState([]);
   const [playlistArray, setPlaylistArray] = useState([]);
   const [playlistName, setPlaylistName] = useState('');
+  
+  localStorage.setItem('code', '');
+
+  // check to see if we're in the callback URL and if so, get the code
+  const onPageLoad = () => {
+    // check to see if there are search params in the URL
+    const param = new URLSearchParams(window.location.search);
+    const code = param.get('code');
+    // if there is a code, store it in local storage
+    if (code) {
+      localStorage.setItem('code', code);
+      
+    }
+  };
 
 
   // state to hold the search term
@@ -47,20 +61,14 @@ function App() {
   // TODO: function to post the playlist to Spotify
   const createPlaylist = async (event) => {
     event.preventDefault();
-    await requestUserAuthorization()
-    .then(code => getToken(code))
-    .then(token => postPlaylist(token, playlistName, playlistArray));
-    
-  
-
-      
-
-  
-
+    await requestUserAuthorization().then(code => getToken(code)).then(token => postPlaylist(token, playlistName, playlistArray));
   };
 
+
+
+
     return (
-    <div className="App">
+    <div className="App" onLoad={onPageLoad}>
       <Header />
       <SearchBar 
       className="searchBar" 
@@ -85,3 +93,4 @@ function App() {
 }
 
 export default App;
+

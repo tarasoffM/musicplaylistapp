@@ -1,21 +1,21 @@
 // Information to reach API
 const clientID = 'e3c027a6665e48f384c60c3846ec41de';
 const clientSecret = '09cc923e2cda49c58055b7b49a2b2ca0';
-const authEndPoint = 'https://accounts.spotify.com/api/token';
+const tokenEndpoint = 'https://accounts.spotify.com/api/token';
 const searchEndPoint = 'https://api.spotify.com/v1/search';
 const query = '?q=';
 const limit = '&limit=10';
 const market = '&market=US';
 const searchType = '&type=track';
 const myUserID = '31yyxt7n7pzvaibfajrdmawzbfeu';
-const userAuthEndpoint = 'https://accounts.spotify.com/authorize?client_id=e3c027a6665e48f384c60c3846ec41de&response_type=code&redirect_uri=http://localhost:3000/&scope=playlist-modify-private';
-
+const authorizeEndpoint = 'https://accounts.spotify.com/authorize?client_id=e3c027a6665e48f384c60c3846ec41de&response_type=code&redirect_uri=http://localhost:3000/&scope=playlist-modify-private';
+const redirectURI = 'http://localhost:3000/';
 
 // Get a token
 const getToken = async () => {
     
     try {
-        const result = await fetch(authEndPoint, {
+        const result = await fetch(tokenEndpoint, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -32,8 +32,8 @@ const getToken = async () => {
 
 // Get music data
 const getMusicData = async (token, searchParam) => {
-    const musicEndPoint = searchEndPoint + query + searchParam + searchType + market + limit;
-    const result = await fetch(musicEndPoint, {
+    const url = searchEndPoint + query + searchParam + searchType + market + limit;
+    const result = await fetch(url, {
         headers: {
             'Authorization': `Bearer ${token}`
         }
@@ -50,19 +50,18 @@ const getMusicData = async (token, searchParam) => {
     });
 };
 
-// TODO: Create function to redirect user to Spotify login page
-const authRedirect = async () => {
-    window.location.href = userAuthEndpoint;
-}
-
 // TODO: Create function to authenticate user with the Spotify API
-const requestUserAuthorization = async () => {
+const requestUserAuthorization = () => {
         
     try {
-        window.location.href = userAuthEndpoint;
-        const args = new URLSearchParams(window.location.search);
-        const code = args.get('code');
-        return code;
+        let url = authorizeEndpoint;
+        url += '&client_id=' + clientID;
+        url += '&response_type=code';
+        url += '&redirect_uri=' + encodeURIComponent(redirectURI);
+        url += '&show_dialog=true';
+        url += '&scope=playlist-modify-private playlist-modify-public';
+
+        window.location.href = url;
     
     } catch (error) {
         alert(error);
