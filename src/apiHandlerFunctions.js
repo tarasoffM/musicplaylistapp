@@ -12,18 +12,23 @@ const authorizeEndpoint = 'https://accounts.spotify.com/authorize?client_id=e3c0
 const redirectURI = 'http://localhost:3000/';
 
 // Get a token
-const getToken = async () => {
+const getToken = async (code) => {
     
     try {
         const result = await fetch(tokenEndpoint, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Basic ' + btoa(clientID + ':' + clientSecret)
             },
-            body: `grant_type=client_credentials&client_id=${clientID}&client_secret=${clientSecret}`
-        });
-        const data = await result.json();
-        return data.access_token;
+            body: `grant_type=authorization_code&code=${code}&redirect_uri=${redirectURI}`
+        
+        })
+        .then((response) => response.json());
+        
+        //const data = await result.json();
+        //alert(JSON.stringify(data));
+        return await result.access_token;
 
     } catch (error) {
         alert(error);
@@ -50,8 +55,8 @@ const getMusicData = async (token, searchParam) => {
     });
 };
 
-// TODO: Create function to authenticate user with the Spotify API
-const requestUserAuthorization = () => {
+// TODO: Create function to redirect to Spotify login
+const redirect = () => {
         
     try {
         let url = authorizeEndpoint;
@@ -70,11 +75,10 @@ const requestUserAuthorization = () => {
 
 
 // TODO: Create function to create a playlist with the selected songs
-const postPlaylist = async (token, playlistName, playlistArray) => {
-    const createPlaylistEndPoint = `https://api.spotify.com/v1/users/${myUserID}/playlists`;  
-        
+const postPlaylist = async (token, playlistName) => {
+    const url = `https://api.spotify.com/v1/users/${myUserID}/playlists`;  
         try {
-        const result = await fetch(createPlaylistEndPoint, {
+        const result = await fetch(url, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -82,30 +86,33 @@ const postPlaylist = async (token, playlistName, playlistArray) => {
             },
             body: JSON.stringify({
                 name: playlistName,
-                description: 'A playlist created by the Spotify API',
-                public: false
+                description: 'New playlist'
+                
             })
         });
         const data = await result.json();
         return data;
         } catch (error) {
             alert(error); }
-    /*
-    const data = await result.json();
-    const playlistID = data.id;
+        };
+    
+const postSongs = async (token, playlistID, playlistArray) => {
+
     const addSongEndPoint = `https://api.spotify.com/v1/playlists/${playlistID}/tracks`;
-    playlistArray.forEach(async (item) => {
-        await fetch(addSongEndPoint, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                uris: [`spotify:track:${item.id}`]
-            })
-        });
-    }); */
+    let trackList = playlistArray.map(item => `spotify:track:${item.id}`);
+    alert(trackList);
+    await fetch(addSongEndPoint, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            uris: trackList,
+            position: 0
+        })
+    }); 
 };
 
-export { getToken, getMusicData, postPlaylist, requestUserAuthorization };
+
+export { getToken, getMusicData, postPlaylist, redirect, postSongs };
