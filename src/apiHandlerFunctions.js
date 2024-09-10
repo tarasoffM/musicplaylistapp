@@ -11,7 +11,7 @@ const myUserID = '31yyxt7n7pzvaibfajrdmawzbfeu';
 const authorizeEndpoint = 'https://accounts.spotify.com/authorize?client_id=e3c027a6665e48f384c60c3846ec41de&response_type=code&redirect_uri=http://localhost:3000/&scope=playlist-modify-private';
 const redirectURI = 'http://localhost:3000/';
 
-// Get a token
+// Request Access Token
 const getToken = async (code) => {
     
     try {
@@ -26,8 +26,6 @@ const getToken = async (code) => {
         })
         .then((response) => response.json());
         
-        //const data = await result.json();
-        //alert(JSON.stringify(data));
         return await result.access_token;
 
     } catch (error) {
@@ -100,7 +98,6 @@ const postSongs = async (token, playlistID, playlistArray) => {
 
     const addSongEndPoint = `https://api.spotify.com/v1/playlists/${playlistID}/tracks`;
     let trackList = playlistArray.map(item => `spotify:track:${item.id}`);
-    alert(trackList);
     await fetch(addSongEndPoint, {
         method: 'POST',
         headers: {
