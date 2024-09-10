@@ -1,10 +1,12 @@
 import React from "react";
 import "./Header.css";
+import Login from "./Login";
 
-const Header = () => {
+const Header = (props) => {
   return (
     <header>
       <h1>Spotify Playlist Creator</h1>
+      <Login handleLogin={props.handleLogin} token={props.token} />
     </header>
   );
 };

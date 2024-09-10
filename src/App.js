@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Header from './Header';
 import Results from './Results';
 import Playlist from './Playlist';
 import SearchBar from './SearchBar';
-import { getToken, getMusicData, postPlaylist , requestUserAuthorization } from './apiHandlerFunctions';
+import Login from './Login';
+import { getToken, getMusicData, postPlaylist , redirect, postSongs } from './apiHandlerFunctions';
 
 function App() {
 
@@ -12,7 +13,41 @@ function App() {
   const [resultArray, setResultArray] = useState([]);
   const [playlistArray, setPlaylistArray] = useState([]);
   const [playlistName, setPlaylistName] = useState('');
+  const [token, setToken] = useState('');
+  const [code, setCode] = useState('');
 
+  //const authenticated = localStorage.getItem('token') ? true : false;
+  
+  //localStorage.setItem('code', '');
+  //localStorage.setItem('token', '');
+
+  // check to see if we're in the callback URL and if so, get the code
+  const authenticate = async () => {
+
+    const querySring = window.location.search;
+    
+    if (querySring.includes('code')) {
+      getCode();
+      await getToken(localStorage.getItem('code'))
+      .then((token) => localStorage.setItem('token', token));
+
+      return localStorage.getItem('token');
+    }
+  };
+
+  // get the code from the URL
+  const getCode = () => {
+    const param = new URLSearchParams(window.location.search);
+    const code = param.get('code');
+    localStorage.setItem('code', code);
+
+    window.history.pushState('', '', 'http://localhost:3000/');
+  };
+
+  // handle the login
+  const handleLogin = () => {
+    redirect();
+  };
 
   // state to hold the search term
   const handleSearch = (event) => {
@@ -30,8 +65,9 @@ function App() {
   // function to search for music titles
   const searchTitles = async (event) => {
     event.preventDefault();
-    const token = await getToken();
-    await getMusicData(token, search)
+    //const token = localStorage.getItem('token');
+    // const token = await getToken();
+    await getMusicData(localStorage.getItem('token'), search)
     .then((response) => setResultArray(response));
   };
 
@@ -47,21 +83,21 @@ function App() {
   // TODO: function to post the playlist to Spotify
   const createPlaylist = async (event) => {
     event.preventDefault();
-    await requestUserAuthorization()
-    .then(code => getToken(code))
-    .then(token => postPlaylist(token, playlistName, playlistArray));
-    
-  
-
-      
-
-  
-
+    await postPlaylist(localStorage.getItem('token'), playlistName)
+    .then((data) => postSongs(localStorage.getItem('token'), data.id, playlistArray));
   };
 
-    return (
-    <div className="App">
-      <Header />
+  
+
+  if (window.location.search.includes('code')) {
+    setToken(authenticate());
+  }
+
+
+
+   return (
+    <div className="App" >
+      <Header handleLogin={handleLogin} token={token}/>
       <SearchBar 
       className="searchBar" 
       handleSearch={handleSearch} 
@@ -82,6 +118,7 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;
+

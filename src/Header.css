@@ -8,4 +8,17 @@ header {
     color: white;
     margin-bottom: 2rem;
     box-shadow: 0 10px 10px rgba(149, 147, 247, 0.226);
+    padding: 1rem;
+  }
+
+  header button {
+    background-color: rgba(27, 27, 48, 0.801);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 10px 10px rgba(149, 147, 247, 0.226);
   }
